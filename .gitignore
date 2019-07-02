@@ -1,0 +1,9 @@
+#
+*.project.org
+*.code.org
+*.notes.org
+#
+.DS_Store
+# 
+.Rprofile
+.Rhistory
