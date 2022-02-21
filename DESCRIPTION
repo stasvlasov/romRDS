@@ -3,18 +3,17 @@ Title: Read or Make RDS
 Version: 0.0.0.9000
 Date: 2019-05-19
 Authors@R: 
-    person(given = "Stanislav",
-           family = "Vlasov",
-           role = c("aut", "cre"),
-           email = "s.vlasov@uvt.nl")
+    person("Stanislav", "Vlasov", , "s.vlasov@uvt.nl", role = c("aut", "cre"))
 Description: Reads or makes .rds if file is not available
 License: MIT License
 Depends: 
     R (>= 3.4)
 Imports: 
+    foreign,
     humanFormat (>= 1.0),
     magrittr (>= 1.5),
-    stringr (>= 1.4.0)
+    stringr (>= 1.4.0),
+    yaml
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2

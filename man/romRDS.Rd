@@ -4,27 +4,36 @@
 \alias{romRDS}
 \title{Read or Make RDS}
 \usage{
-romRDS(obj.name, ..., dir = "rds", file.name.sufix = "",
-  file.name.sufix.sep = ".", file.name.extention = ".rds",
-  obj.name.has.extention = FALSE, compress.rds = FALSE,
-  return.obj.name = FALSE, do.not.make = FALSE, quietly = FALSE)
+romRDS(
+  obj_name,
+  ...,
+  dir = "rds",
+  file_name_sufix = "",
+  file_name_sufix_sep = ".",
+  file_name_extention = ".rds",
+  obj_name_has_extention = FALSE,
+  compress_rds = FALSE,
+  return_obj_name = FALSE,
+  do_not_make = FALSE,
+  quietly = FALSE
+)
 }
 \arguments{
 \item{dir}{Directory where to look for or save to .rds. Default is "./rds"}
 
-\item{file.name.sufix}{e.g., date or version. Default is ""}
+\item{file_name_sufix}{e.g., date or version. Default is ""}
 
-\item{file.name.sufix.sep}{Default is "."}
+\item{file_name_sufix_sep}{Default is "."}
 
-\item{file.name.extention}{Default is ".rds"}
+\item{file_name_extention}{Default is ".rds"}
 
-\item{obj.name.has.extention}{Default is FALSE}
+\item{obj_name_has_extention}{Default is FALSE}
 
-\item{compress.rds}{Default is FALSE. It is faster to read and write if rds is not compressed.}
+\item{compress_rds}{Default is FALSE. It is faster to read and write if rds is not compressed.}
 
-\item{return.obj.name}{Default is FALSE}
+\item{return_obj_name}{Default is FALSE}
 
-\item{do.not.make}{Default is FALSE}
+\item{do_not_make}{Default is FALSE}
 
 \item{quietly}{Default is FALSE}
 }
