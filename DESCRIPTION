@@ -1,19 +1,17 @@
 Package: romRDS
 Title: Read or Make RDS
 Version: 0.0.0.9000
-Date: 2019-05-19
+Date: 2022-03-08
 Authors@R: 
     person("Stanislav", "Vlasov", , "s.vlasov@uvt.nl", role = c("aut", "cre"))
 Description: Reads or makes .rds if file is not available
 License: MIT License
 Depends: 
-    R (>= 3.4)
+    R (>= 4.0)
 Imports: 
-    foreign,
+    foreign (>= 0.8),
     humanFormat (>= 1.0),
-    magrittr (>= 1.5),
-    stringr (>= 1.4.0),
-    yaml
+    yaml (>= 2.0)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2

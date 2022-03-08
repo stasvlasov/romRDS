@@ -2,16 +2,52 @@
 % Please edit documentation in R/romRDS.r
 \name{rom}
 \alias{rom}
+\alias{romRDS}
 \title{Read or Make RDS}
 \usage{
-rom(...)
+rom(
+  obj_name,
+  ...,
+  dir = "rds",
+  file_name_sufix = "",
+  file_name_sufix_sep = ".",
+  file_name_extention = ".rds",
+  obj_name_has_extention = FALSE,
+  compress_rds = FALSE,
+  return_obj_name = FALSE,
+  do_not_make = FALSE,
+  quietly = FALSE,
+  assign_to_obj_name = TRUE
+)
 }
 \arguments{
-\item{...}{Parameters passed to 'romRDS'}
+\item{obj_name}{}
+
+\item{...}{}
+
+\item{dir}{Directory where to look for or save to .rds. Default is "./rds"}
+
+\item{file_name_sufix}{e.g., date or version. Default is ""}
+
+\item{file_name_sufix_sep}{Default is "."}
+
+\item{file_name_extention}{Default is ".rds"}
+
+\item{obj_name_has_extention}{Default is FALSE}
+
+\item{compress_rds}{Default is FALSE. It is faster to read and write if rds is not compressed.}
+
+\item{return_obj_name}{Default is FALSE}
+
+\item{do_not_make}{Default is FALSE}
+
+\item{quietly}{Default is FALSE}
+
+\item{assign_to_obj_name}{}
 }
 \value{
-Nothing or name of the obj. Loads object into memory..
+Returns the object or name of the obj (if return_obj_name is TRUE).
 }
 \description{
-A shorthand for romRDS. Reads or makes .rds if file is not available
+Reads or makes .rds if file is not available and loads the object into memory.
 }
