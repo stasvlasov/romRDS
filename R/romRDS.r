@@ -1,6 +1,5 @@
 dur_from <- function(start_time) {
-    Sys.time() |> 
-        subtract(start_time) |>
+    (Sys.time() - start_time) |> 
         as.numeric() |>
         humanFormat::formatSeconds()
 }
@@ -62,7 +61,7 @@ romRDS <- function(obj_name
     file_path <- file.path(dir
                          , paste0(obj_name
                                 , file_name_sufix
-                                , file_name_extention))
+                                , ".", file_name_extention))
     if(file.exists(file_path)) {
         if(quietly) {
             assign(obj_name, readRDS(file_path), pos = 1)
