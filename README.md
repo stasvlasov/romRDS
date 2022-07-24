@@ -2,6 +2,7 @@
 # `romRDS` an R package to read or make RDS
 
 [![R-CMD-check](https://github.com/stasvlasov/romRDS/workflows/R-CMD-check/badge.svg)](https://github.com/stasvlasov/romRDS/actions)
+[![codecov](https://codecov.io/gh/stasvlasov/romRDS/branch/master/graph/badge.svg?token=DIUS28A7US)](https://codecov.io/gh/stasvlasov/romRDS)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/stasvlasov/romRDS)
 
 The `romRDS` package provides a wrapper that handles assignment of the code's resulting value to an object. The wrapper automatically saves the value in .rds and for later invocations can use this file to skip evaluation. Basically the wrapper either Reads from the disk Or Makes RDS files for later reuse (hence `romRDS` name). The main motivation is to avoid unnecessary reevaluation of some computationally expensive code chunks (e.g., when your R session crashed and you lost all the objects) and free up from frequent snapshots of the entire environment to the .Rdata.
@@ -34,12 +35,12 @@ For example:
 
 ## Installation
 
-    devtools::install_github("nil")
+    devtools::install_github("stasvlasov/romRDS")
 
 
 ## Dependencies and Suggests
 
-<table id="org7a9ac8a" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="orgb913d65" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -62,7 +63,7 @@ For example:
 </tbody>
 </table>
 
-<table id="org4da550e" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="orgf88cbb8" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -96,7 +97,7 @@ For example:
 </tbody>
 </table>
 
-<table id="org2b1b9b4" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="orgc53e319" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
