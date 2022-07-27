@@ -40,7 +40,7 @@ For example:
 
 ## Dependencies and Suggests
 
-<table id="orgb913d65" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="orgfb5c5a2" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -63,7 +63,7 @@ For example:
 </tbody>
 </table>
 
-<table id="orgf88cbb8" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="org4f2cabc" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -94,10 +94,17 @@ For example:
 <td class="org-right">2.1.0</td>
 <td class="org-left">&#xa0;</td>
 </tr>
+
+
+<tr>
+<td class="org-left">humanFormat</td>
+<td class="org-right">1.0</td>
+<td class="org-left">&#xa0;</td>
+</tr>
 </tbody>
 </table>
 
-<table id="orgc53e319" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="org5309b03" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
