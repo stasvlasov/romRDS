@@ -7,7 +7,8 @@
 
 The `romRDS` package provides a wrapper that handles assignment of the code's resulting value to an object. The wrapper automatically saves the value in .rds and for later invocations can use this file to skip evaluation. Basically the wrapper either Reads from the disk Or Makes RDS files for later reuse (hence `romRDS` name). The main motivation is to avoid unnecessary reevaluation of some computationally expensive code chunks (e.g., when your R session crashed and you lost all the objects) and free up from frequent snapshots of the entire environment to the .Rdata.
 
-For example:
+
+## Usage
 
     ## consider some evaluation with subsequent assignment to object
     my_object_name <- Sys.sleep(5)
@@ -37,33 +38,37 @@ For example:
 
     devtools::install_github("stasvlasov/romRDS")
 
+By default the package installation does not rely on any dependencies. However, if you need to some additional features (e.g., robust parameters checking and working with STATA's dta files) you need to install it with extra suggested dependencies.
 
-## Dependencies and Suggests
+    devtools::install_github("stasvlasov/romRDS", dependencies = TRUE)
 
-<table id="orgfb5c5a2" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+## Dependencies
+
+<table id="orgd9fc0ab" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
 <col  class="org-left" />
 
-<col  class="org-left" />
+<col  class="org-right" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left">packages</th>
-<th scope="col" class="org-left">link</th>
+<th scope="col" class="org-left">name</th>
+<th scope="col" class="org-right">version</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td class="org-left">tinytest</td>
-<td class="org-left"><a href="https://github.com/markvanderloo/tinytest/blob/master/pkg/README.md">https://github.com/markvanderloo/tinytest/blob/master/pkg/README.md</a></td>
+<td class="org-left">R</td>
+<td class="org-right">4.2.0</td>
 </tr>
 </tbody>
 </table>
 
-<table id="org4f2cabc" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="orgf0636b8" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -75,58 +80,62 @@ For example:
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left">packages</th>
+<th scope="col" class="org-left">name</th>
 <th scope="col" class="org-right">version</th>
-<th scope="col" class="org-left">link</th>
+<th scope="col" class="org-left">comment</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td class="org-left">haven</td>
-<td class="org-right">2.5.0</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-
-<tr>
-<td class="org-left">checkmate</td>
-<td class="org-right">2.1.0</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://github.com/markvanderloo/tinytest/blob/master/pkg/README.md">tinytest</a></td>
+<td class="org-right">1.3.1</td>
+<td class="org-left">for testing</td>
 </tr>
 
 
 <tr>
 <td class="org-left">humanFormat</td>
 <td class="org-right">1.0</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">for formatting messages</td>
+</tr>
+
+
+<tr>
+<td class="org-left">checkmate</td>
+<td class="org-right">2.1.0</td>
+<td class="org-left">for checking arguments</td>
+</tr>
+
+
+<tr>
+<td class="org-left">haven</td>
+<td class="org-right">2.5.0</td>
+<td class="org-left">for reading STATA .dta files</td>
 </tr>
 </tbody>
 </table>
 
-<table id="org5309b03" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="org9c74c16" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
 <col  class="org-left" />
 
-<col  class="org-left" />
+<col  class="org-right" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left">packages</th>
-<th scope="col" class="org-left">link</th>
+<th scope="col" class="org-left">name</th>
+<th scope="col" class="org-right">version</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td class="org-left">unrar</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left"><a href="https://www.rarlab.com/">unrar</a></td>
+<td class="org-right">6.12</td>
 </tr>
 </tbody>
 </table>
-
-
-## Development
 

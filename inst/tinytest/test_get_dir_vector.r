@@ -1,7 +1,7 @@
 expect_equal(
     ## call to test
     ## ------------------------------------------------------------
-    dir_for_ext("csv"
+    get_dir_vector("csv"
               , list("data" = list("csv", "tsv", "txt", "dta", "rds", "zip", "rar")
                    , "docs" = c("pdf", "doc", "docx", "md")
                    , "scripts" = c("r", "do", "py", "sh", "perl")))
@@ -11,11 +11,18 @@ expect_equal(
 )
 
 
+expect_equal(
+    ## call to test
+    ## ------------------------------------------------------------
+    get_dir_vector("any_ext", "data")
+    ## expected value
+    ## ------------------------------------------------------------
+  , "data")
 
 expect_equal(
     ## call to test
     ## ------------------------------------------------------------
-    dir_for_ext("docx"
+    get_dir_vector("docx"
               , list("data" = list("csv", "tsv", "txt", "dta", "rds", "zip", "rar")
                    , "docs" = c("pdf", "doc", "docx", "md")
                    , "scripts" = c("r", "do", "py", "sh", "perl")))
@@ -27,7 +34,7 @@ expect_equal(
 expect_equal(
     ## call to test
     ## ------------------------------------------------------------
-    dir_for_ext("csv"
+    get_dir_vector("csv"
               , list("csv", "tsv", "txt", "dta", "rds", "zip", "rar"))
     ## expected value
     ## ------------------------------------------------------------

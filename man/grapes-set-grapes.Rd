@@ -12,5 +12,5 @@ obj \%<-\% ...
 \item{...}{what to assign (make)}
 }
 \description{
-A wrapper around romRDS
+Note that ... should be enclosed in {} if it is not a single expression. For example if you do 'var \%<-\% 1 + 1' var would be 1 not 2 but 'var \%<-\% {1 + 1}' will work as expected
 }
