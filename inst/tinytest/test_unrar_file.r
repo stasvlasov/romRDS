@@ -4,8 +4,8 @@ expect_true({
     dir_map <- list(list("rar", "doc" = "docx"))
     names(dir_map) <- tempdir()
     ## download and extract
-    download_file(rar_url, dir_map) |>
-        unrar_file("word/sample.docx", dir_map)
+    romRDS:::download_file(rar_url, dir_map) |>
+        romRDS:::unrar_file("word/sample.docx", dir_map)
     names(dir_map) |>
         file.path("doc", "sample.docx") |>
         file.exists()

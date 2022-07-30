@@ -6,7 +6,7 @@ expect_equal(
       dir_map <- list(list("csv"))
       names(dir_map) <- tempdir()
       ## download
-      download_file(csv_url, dir_map)
+      romRDS:::download_file(csv_url, dir_map)
       ## read it and return check sum
       names(dir_map) |>
           file.path("csv", basename(csv_url)) |>
@@ -16,4 +16,4 @@ expect_equal(
   #-------------------------------------------------------------------------
   , list(Game.Number = 500500L, Game.Length = 35411L))
 
-  expect_error("file-name.zip" |> download_file())
+  expect_error("file-name.zip" |> romRDS:::download_file())

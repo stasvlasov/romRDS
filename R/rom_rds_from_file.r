@@ -44,6 +44,13 @@ rom_rds_from_file <- function(file_url
     }, rds_dir = do.call(file.path, as.list(get_dir_vector("rds", dir_map))))
 }
 
+##' Downloads file to a dir according to dir_map (see `` for details)
+##'
+##' @param file_url url
+##' @param dir_map map ext to dir
+##' @return file name
+##' 
+##' @export 
 download_file <- function(file_url
                         , dir_map = getOption("romRDS_dir_map")) {
     if(is_url(file_url)) {

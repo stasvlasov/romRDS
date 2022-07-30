@@ -18,7 +18,7 @@ obj_size <-  function(obj) {
     }
 }
 
-get_dir_vector <- function(ext, dir_map, root_dir = NULL) {
+get_dir_vector <- function(ext, dir_map, dir_root = NULL) {
     dir_names <- names(dir_map)
     ## use simply as directory to put everything in
     if(is.character(dir_map) && length(dir_map) == 1 && is.null(dir_names)) {
@@ -30,9 +30,9 @@ get_dir_vector <- function(ext, dir_map, root_dir = NULL) {
         ## if list element is unnamed then use ext as dir
         if(dir_name == "") dir_name <- exts[[1]]
         if(is.character(exts)) {
-            if(ext %in% exts) c(root_dir, dir_name) else NULL
+            if(ext %in% exts) c(dir_root, dir_name) else NULL
         } else if(is.list(exts)) {
-            get_dir_vector(ext, exts, dir_name)
+            get_dir_vector(ext, exts, c(dir_root, dir_name))
         } else {
             stop("Wrong specification of `dir_map`. It should be either list of character")
         }
