@@ -16,6 +16,9 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/download_file.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_path.html</loc>
   </url>
   <url>
@@ -29,5 +32,8 @@
   </url>
   <url>
     <loc>/reference/rom_rds.html</loc>
+  </url>
+  <url>
+    <loc>/reference/rom_rds_read.html</loc>
   </url>
 </urlset>
