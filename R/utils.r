@@ -52,7 +52,7 @@ get_dir_vector <- function(ext, dir_map, dir_root = NULL) {
 ##' @param make_dir Whether to create dir recursively if it does not exists
 ##' @return A path as a string
 get_path <- function(file_name
-                   , dir_map = getOption("romRDS_dir_map")
+                   , dir_map = get_dir_map()
                    , dir_only = FALSE
                    , dir_terminate_with_sep = TRUE
                    , make_dir = TRUE) {

@@ -1,10 +1,26 @@
+##' Returns default options for mapping file extentions to directories (used mainly by `rom_rds_read`)
+##' 
+##' @return list with mappings
+get_dir_map_defaults <- function() {
+    list("data" = list("csv", "tsv", "txt", "dta", "rds", "zip", "rar")
+       , "docs" = c("pdf", "doc", "docx", "md")
+       , "scripts" = c("r", "do", "py", "sh", "perl"))
+}
+
+
 .onAttach <- function(libname, pkgname) {
     options(
-        "romRDS_dir_map" =
-            list("data" = list("csv", "tsv", "txt", "dta", "rds", "zip", "rar")
-               , "docs" = c("pdf", "doc", "docx", "md")
-               , "scripts" = c("r", "do", "py", "sh", "perl"))
+        "romRDS_dir_map" = romRDS:::get_dir_map_defaults()
     )
+}
+
+##' Returns list of mappings of file extentions to directories (used mainly by `rom_rds_read`). If options 'romRDS_dir_map' is set gets its values otherwise returns defauls from `get_dir_map_defaults()`
+##' 
+##' @return list with mappings
+get_dir_map <- function() {
+    romRDS_dir_map <- getOption("romRDS_dir_map")
+    if(is.null(romRDS_dir_map)) romRDS_dir_map <- get_dir_map_defaults()
+    return(romRDS_dir_map)
 }
 
 ##' @title  Read or Make RDS
@@ -152,7 +168,7 @@ rom_rds <- function(name
             message("romRDS -- File ", file_path, " does not exist. Making one...")
         }
         val <- eval(..., enclos = globalenv())
-        ## do not save NULLs (this 'feature' used by rom_rds_from_file)
+        ## do not save NULLs (this 'feature' used by rom_rds_read)
         if(!do_not_save && !is.null(val)) {
             saveRDS(val, file_path, compress = rds_compress)
         }

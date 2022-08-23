@@ -1,7 +1,7 @@
 Package: romRDS
 Title: R package to read or make RDS
 Version: 0.0.0.9000
-Date: 2022-07-30
+Date: 2022-07-31
 Authors@R: 
     person("Stas", "Vlasov", , "s.vlasov@uvt.nl", role = c("aut", "cre"))
 Description: The ~romRDS~ package provides a wrapper that handles

@@ -45,7 +45,7 @@ By default the package installation does not rely on any dependencies. However, 
 
 ## Dependencies
 
-<table id="org5ee9a7a" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="orgb09f87a" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -68,7 +68,7 @@ By default the package installation does not rely on any dependencies. However, 
 </tbody>
 </table>
 
-<table id="org0c4aa60" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="orge1c71c0" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
@@ -116,7 +116,7 @@ By default the package installation does not rely on any dependencies. However, 
 </tbody>
 </table>
 
-<table id="orgcde6e12" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table id="orge3258fe" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
