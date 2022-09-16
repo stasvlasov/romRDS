@@ -52,7 +52,7 @@ rom_rds <- function(name
                   , file_name_sufix = character(0)
                   , file_name_sufix_var = NULL
                   , file_name_sufix_sep = "."
-                  , file_name_extention = ".rds"
+                  , file_name_extention = "rds"
                   , name_has_extention = FALSE
                   , rds_compress = FALSE
                   , return_name = FALSE
@@ -103,6 +103,10 @@ rom_rds <- function(name
     if(name_has_extention) {
         file_name_extention <- tools::file_ext(name)
         name <- tools::file_path_sans_ext(name)
+    }
+    ## handle file extention
+    if(!is.null(file_name_extention) && !(file_name_extention == "")) {
+        file_name_extention <- paste0(".", file_name_extention)
     }
     ## make file name
     file_name <- paste0(name
