@@ -45,8 +45,8 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_path</span><span class="op">(</span></span>
-<span>  <span class="va">file_name</span>,</span>
-<span>  dir_map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"romRDS_dir_map"</span><span class="op">)</span>,</span>
+<span>  <span class="va">file_names</span>,</span>
+<span>  dir_map <span class="op">=</span> <span class="fu"><a href="get_dir_map.html">get_dir_map</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  dir_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  dir_terminate_with_sep <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  make_dir <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -55,12 +55,12 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>file_name</dt>
-<dd><p>File name. Could also be a path but only file's base name will be used</p></dd>
+    <dl><dt>file_names</dt>
+<dd><p>File names. Could also be a paths but only file's base name will be used</p></dd>
 
 
 <dt>dir_map</dt>
-<dd><p>A specification of mapping between file extention and directory. Can be a named list where names used as directory names and values if it is character are corresponding extentions that shoudl go to the directory name or if it is list futher mappings of extentions to subdirectories in recursive manner</p></dd>
+<dd><p>A specification of mapping between file extention and directory. Can be a named list where names used as directory names and values if it is character are corresponding extentions that should go to the directory name or if it is list futher mappings of extentions to subdirectories in recursive manner</p></dd>
 
 
 <dt>dir_only</dt>
@@ -94,7 +94,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

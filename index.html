@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>R package to read or make RDS • romRDS</title>
+<title>Read or Make RDS • romRDS</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="R package to read or make RDS">
+<script src="pkgdown.js"></script><meta property="og:title" content="Read or Make RDS">
 <meta property="og:description" content="The ~romRDS~ package provides a wrapper that handles
     assignment of the code's resulting value to an object. The wrapper
     automatically saves the value in .rds and for later invocations can
@@ -63,112 +63,15 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div class="section level1">
-<div class="page-header"><h1 id="romrds-an-r-package-to-read-or-make-rds">
-<code>romRDS</code> an R package to read or make RDS<a class="anchor" aria-label="anchor" href="#romrds-an-r-package-to-read-or-make-rds"></a>
-</h1></div>
-
-<p>The <code>romRDS</code> package provides a wrapper that handles assignment of the code’s resulting value to an object. The wrapper automatically saves the value in .rds and for later invocations can use this file to skip evaluation. Basically the wrapper either Reads from the disk Or Makes RDS files for later reuse (hence <code>romRDS</code> name). The main motivation is to avoid unnecessary reevaluation of some computationally expensive code chunks (e.g., when your R session crashed and you lost all the objects) and free up from frequent snapshots of the entire environment to the .Rdata.</p>
-<div class="section level2">
-<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
-</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## consider some evaluation with subsequent assignment to object</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>my_object_name <span class="ot">&lt;-</span> <span class="fu">Sys.sleep</span>(<span class="dv">5</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## the above will take 5 sec every time</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## the romRDS package provides the romRDS function (its infix equivalent is %&lt;--%)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">romRDS</span>(<span class="st">"my_object_name"</span>, <span class="fu">Sys.sleep</span>(<span class="dv">5</span>))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## the equivalent of the above in infix form</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>my_object_name <span class="sc">%&lt;--%</span> <span class="fu">Sys.sleep</span>(<span class="dv">5</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## multiple commands can be wrapped in {} as usual</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>my_object_name <span class="sc">%&lt;--%</span> {</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">5</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="fu">runif</span>(<span class="dv">10</span>))</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="do">## or you can use R pipes introduced since R v4.0</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="do">## note that maggritr pipes probably won't work</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>my_object_name <span class="sc">%&lt;--%</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="dv">5</span>) <span class="sc">|</span><span class="er">&gt;</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"Sys.sleep returns NULL so prepending it to this string does not change it."</span>)</span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"stasvlasov/romRDS"</span>)</span></code></pre></div>
-<p>By default the package installation does not rely on any dependencies. However, if you need to some additional features (e.g., robust parameters checking and working with STATA’s dta files) you need to install it with extra suggested dependencies.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"stasvlasov/romRDS"</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
-</h2>
-<table id="orgb09f87a" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="table">
-<colgroup>
-<col class="org-left">
-<col class="org-right">
-</colgroup>
-<thead><tr>
-<th scope="col" class="org-left">name</th>
-<th scope="col" class="org-right">version</th>
-</tr></thead>
-<tbody><tr>
-<td class="org-left">R</td>
-<td class="org-right">4.2.0</td>
-</tr></tbody>
-</table>
-<table id="orge1c71c0" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="table">
-<colgroup>
-<col class="org-left">
-<col class="org-right">
-<col class="org-left">
-</colgroup>
-<thead><tr>
-<th scope="col" class="org-left">name</th>
-<th scope="col" class="org-right">version</th>
-<th scope="col" class="org-left">comment</th>
-</tr></thead>
-<tbody>
-<tr>
-<td class="org-left"><a href="https://github.com/markvanderloo/tinytest/blob/master/pkg/README.md" class="external-link">tinytest</a></td>
-<td class="org-right">1.3.1</td>
-<td class="org-left">for testing</td>
-</tr>
-<tr>
-<td class="org-left">humanFormat</td>
-<td class="org-right">1.0</td>
-<td class="org-left">for formatting messages</td>
-</tr>
-<tr>
-<td class="org-left">checkmate</td>
-<td class="org-right">2.1.0</td>
-<td class="org-left">for checking arguments</td>
-</tr>
-<tr>
-<td class="org-left">haven</td>
-<td class="org-right">2.5.0</td>
-<td class="org-left">for reading STATA .dta files</td>
-</tr>
-</tbody>
-</table>
-<table id="orge3258fe" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="table">
-<colgroup>
-<col class="org-left">
-<col class="org-right">
-</colgroup>
-<thead><tr>
-<th scope="col" class="org-left">name</th>
-<th scope="col" class="org-right">version</th>
-</tr></thead>
-<tbody><tr>
-<td class="org-left"><a href="https://www.rarlab.com/" class="external-link">unrar</a></td>
-<td class="org-right">6.12</td>
-</tr></tbody>
-</table>
-</div>
-</div>
+The ~romRDS~ package provides a wrapper that handles
+    assignment of the code's resulting value to an object. The wrapper
+    automatically saves the value in .rds and for later invocations can
+    use this file to skip evaluation. Basically the wrapper either Reads
+    from the disk Or Makes RDS files for later reuse (hence ~romRDS~
+    name). The main motivation is to avoid unnecessary reevaluation of
+    some computationally expensive code chunks (e.g., when your R session
+    crashed and you lost all the objects) and free up from frequent
+    snapshots of the entire environment to the .Rdata.
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -195,13 +98,7 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://github.com/stasvlasov/romRDS/actions" class="external-link"><img src="https://github.com/stasvlasov/romRDS/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/stasvlasov/romRDS" class="external-link"><img src="https://codecov.io/gh/stasvlasov/romRDS/branch/master/graph/badge.svg?token=DIUS28A7US" alt="codecov"></a></li>
-</ul>
-</div>
+
 
   </div>
 </div>
@@ -214,7 +111,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
