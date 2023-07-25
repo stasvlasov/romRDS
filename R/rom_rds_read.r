@@ -3,20 +3,30 @@
 ##' @param file_url Files location. Can be a url link (should start with http[s]) or path to archive file (zip or rar)
 ##' @param file_name Name of the file. If omited the base name of `file_url` is used
 ##' @param dir_map Where to put the file. Mapping between destination directories and file's extention.
-##' @param read_txt_as How to read txt files.
+##' @param read_as_ext Named character vertor that specifies how to read different file extentions. Names are supported methods ('csv', 'tsv', 'dta'), values are file expentions that should be processed with these methods.
 ##' @param file_url_globs_expantion Whether to expand (expect) globs in file_url. If so (default) then try expand url with 'Sys.glob'
+##' @param copy_local_files 
 ##' @return path to rds file
 ##' 
 ##' @export 
 rom_rds_read <- function(file_url
                        , file_name = NULL
                        , dir_map = get_dir_map()
-                       , read_txt_as = "csv"
+                       , read_as_ext = c("csv" = "txt")
                        , file_url_globs_expantion = TRUE
-                       , copy_local_files = FALSE) {
-    if(file_url_globs_expantion) {
-        ## expand globs in url
-        file_url <- Sys.glob(file_url)
+                       , copy_local_files = FALSE
+                         ) {
+    ## check if url is archive and has description of files to extract
+    file_zip <- NULL
+    if(grepl(".+\\.(zip|rar)//.+", file_url)) {
+        file_url_in_zip <- sub("^.+\\.(zip|rar)//", "", file_url)
+        file_zip <- sub(paste0("//", file_url_in_zip, "$"), "", file_url)
+        file_url <- file_url_in_zip
+    }
+    ## expand globs in url
+    if(file_url_globs_expantion &&
+       length(file_url_try_glob <- Sys.glob(file_url)) != 0) {
+        file_url <- file_url_try_glob
     }
     ## if rds does not yet exist
     if(is.null(file_name)) {
@@ -32,28 +42,42 @@ rom_rds_read <- function(file_url
         file_path <- get_path(file_name, dir_map)
         if(!file.exists(file_path)) {
             ## try to download
-            if(all(is_url(file_url))) {
+            if(!is.null(file_zip) && is_url(file_zip)) {
+                file_zip <- download_file(file_zip, dir_map)
+                copy_local_files <- FALSE
+            } else if(length(file_url) == 1 &&
+                      is_url(file_url)) {
                 file_url <- download_file(file_url, dir_map)
             }
-            ## try to unarchive or just set file_url as path
-            switch(tools::file_ext(file_url)[1]
-                 , zip = unzip_file(file_url, file_name, dir_map)
-                 , rar = unrar_file(file_url, file_name, dir_map)
-                 , if(copy_local_files) {
-                       file_path <- get_path(file_name, dir_map
-                                           , dir_only = TRUE
-                                           , dir_terminate_with_sep = FALSE)
-                       file.copy(file_url, file_path)
-                       file_path <- file.path(file_path, basename(file_url))
-                   } else{
-                       file_path <- file_url
-                   })
+            ## try to unarchive...
+            if(!is.null(file_zip)) {
+                switch(tools::file_ext(file_zip)
+                     , zip = unzip_file(file_zip, file_url, dir_map)
+                     , rar = unrar_file(file_zip, file_url, dir_map))
+                file_path <- get_path(file_url, dir_map)
+            }
+            if(length(file_url) == 1) {
+                switch(tools::file_ext(file_url) 
+                     , zip = unzip_file(file_url, file_name, dir_map)
+                     , rar = unrar_file(file_url, file_name, dir_map))
+            }
+            ## set file_url as path
+            if(copy_local_files) {
+                file_path <- get_path(file_name, dir_map
+                                    , dir_only = TRUE
+                                    , dir_terminate_with_sep = FALSE)
+                file.copy(file_url, file_path)
+                file_path <- file.path(file_path, basename(file_url))
+            } else{
+                file_path <- file_url
+            }
         }
-        ## by now we should have the file
+        ## by now we should have the file(s) downloaded and extracted
         if(all(file.exists(file_path))) {
             file_ext <- tools::file_ext(file_name)
-            if(file_ext == "txt") {
-                file_ext <- read_txt_as
+            if(file_ext %in% read_as_ext) {
+                ## read_as_ext should have names
+                file_ext <- names(read_as_ext[read_as_ext == file_ext])[1]
             }
             if(length(file_path) > 1) {
                 switch(file_ext
@@ -85,7 +109,6 @@ rom_rds_read <- function(file_url
                 switch(file_ext
                      , csv = if(requireNamespace("data.table", quietly = TRUE)) {
                                  data.table::fread(file_path)
-
                              } else {
                                  read.csv(file_path, as.is = TRUE, row.names = NULL)
 
@@ -96,16 +119,20 @@ rom_rds_read <- function(file_url
                                  read.table(file_path, as.is = TRUE, sep = "\t", header = TRUE, row.names = NULL)
                              }
                      , dta = if(requireNamespace("haven", quietly = TRUE)) {
-                                 haven::read_dta(file_path)
+                                 if(requireNamespace("data.table", quietly = TRUE)) {
+                                     haven::read_dta(file_path) |> data.table::as.data.table()
+                                 } else {
+                                     haven::read_dta(file_path)
+                                 }
                              } else {
-                                 message("Can not read dta file", file_path
-                                       , "because package 'haven' is not available."
+                                 message("rom_rds_read -- Can not read dta file - '", file_path, "' "
+                                       , "because package 'haven' is not available.", " "
                                        , "Consider installing it with `install.packages('haven')`")
                              }
                      , rds = readRDS(file_path))
             } 
         } else {
-            stop("Can not find/download/unzip data file to read")
+            stop("rom_rds_read -- Can not find/download/unzip data file to read")
         }
     }, rds_dir = do.call(file.path, as.list(get_dir_vector("rds", dir_map))))
 }
@@ -114,47 +141,56 @@ rom_rds_read <- function(file_url
 ##'
 ##' @param file_url url
 ##' @param dir_map map ext to dir
+##' @param timeout set option `timeout` for download timeout. Default is one hour (3600 sec)
 ##' @return file name
 ##' 
 ##' @export 
 download_file <- function(file_url
-                        , dir_map = get_dir_map()) {
+                        , dir_map = get_dir_map()
+                        , timeout = 3600) {
     if(is_url(file_url)) {
         file_path <- get_path(file_url, dir_map)
         if(file.exists(file_path)) {
-            message("File ", file_path, " already exists. Skipping downloading.")
+            message("download_file -- File ", file_path, " already exists. Skipping downloading.")
             return(file_path)
         } else {
-            message("Downloading to ", file_path)
+            message("download_file -- Downloading to ", file_path)
+            timeout_original <- getOption("timeout")
+            options(timeout = timeout)
             if(download.file(file_url, file_path) == 0) {
-                message("File ", file_path, " is downloaded.")
+                options(timeout = timeout_original)
+                message("download_file -- File ", file_path, " is downloaded.")
                 return(file_path)
             } else {
-                stop("Failed to download the ", file_url)
+                options(timeout = timeout_original)
+                stop("download_file -- Failed to download the ", file_url)
             }
         }
     } else {
-        stop("url is not valid url")
+        stop("download_file -- url is not valid url")
     }
 }
 
 unzip_file <- function(file_url
-                     , file_name
+                     , files_name
                      , dir_map = get_dir_map()
                      , junk_paths = TRUE) {
     if(is_ext("zip", file_url)) {
-        file_path <- get_path(file_name, dir_map)
-        if(!file.exists(file_path)) {
-            utils::unzip(file_url
-                       , files = file_name
-                       , exdir = dirname(file_path)
-                       , junkpaths = junk_paths)
-        } else {
-            message("File is already unziped. Skipping unzipping.")
-        }
-        return(file_path)
+        files_path <- get_path(files_name, dir_map)
+        sapply(files_path, \(file_path) {
+            if(!file.exists(file_path)) {
+                utils::unzip(file_url
+                           , files = files_name
+                           , exdir = dirname(file_path)
+                           , junkpaths = junk_paths
+                           , overwrite = FALSE)
+                } else {
+                    message("unzip_file -- File is already unziped. Skipping unzipping.")
+                }
+            })
+        return(files_path)
     } else {
-        stop("The input file is not zip")
+        stop("unzip_file -- The input file is not zip")
     }
 }
 
@@ -165,8 +201,7 @@ unrar_file <- function(file_url
         if(Sys.which("unrar") == "") {
             stop("unrar_file -- 'unrar' command is not installed.")
         }
-        file_path <- get_path(file_name
-                                       , dir_map)
+        file_path <- get_path(file_name, dir_map)
         if(!file.exists(file_path)) {
             system(paste("unrar e"
                        , file_url
@@ -174,10 +209,10 @@ unrar_file <- function(file_url
                        , file.path(dirname(file_path), ""))
                  , intern = TRUE)
         } else {
-            message("File is already unrared. Skipping unraring.")
+            message("unrar_file -- File is already unrared. Skipping unraring.")
         }
         return(file_path)
     } else {
-        stop("The input file is not rar")
+        stop("unrar_file -- The input file is not rar")
     }
 }

@@ -12,7 +12,7 @@ rom_rds(
   file_name_sufix = character(0),
   file_name_sufix_var = NULL,
   file_name_sufix_sep = ".",
-  file_name_extention = ".rds",
+  file_name_extention = "rds",
   name_has_extention = FALSE,
   rds_compress = FALSE,
   return_name = FALSE,

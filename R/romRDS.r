@@ -134,7 +134,7 @@ rom_rds <- function(name
                      , showWarnings = FALSE
                      , recursive = TRUE)
         } else {
-            stop("The directory '"
+            stop("romRDS -- The directory '"
                , rds_dir
                , "' does not exist and ensuring is disabled (see `rds_dir_ensure`)")
         }

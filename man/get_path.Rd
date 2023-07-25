@@ -5,17 +5,17 @@
 \title{Makes path from file_name using directory to extention mappings specified in dir_map}
 \usage{
 get_path(
-  file_name,
-  dir_map = getOption("romRDS_dir_map"),
+  file_names,
+  dir_map = get_dir_map(),
   dir_only = FALSE,
   dir_terminate_with_sep = TRUE,
   make_dir = TRUE
 )
 }
 \arguments{
-\item{file_name}{File name. Could also be a path but only file's base name will be used}
+\item{file_names}{File names. Could also be a paths but only file's base name will be used}
 
-\item{dir_map}{A specification of mapping between file extention and directory. Can be a named list where names used as directory names and values if it is character are corresponding extentions that shoudl go to the directory name or if it is list futher mappings of extentions to subdirectories in recursive manner}
+\item{dir_map}{A specification of mapping between file extention and directory. Can be a named list where names used as directory names and values if it is character are corresponding extentions that should go to the directory name or if it is list futher mappings of extentions to subdirectories in recursive manner}
 
 \item{dir_only}{return dir path only}
 

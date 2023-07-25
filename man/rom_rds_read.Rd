@@ -7,8 +7,10 @@
 rom_rds_read(
   file_url,
   file_name = NULL,
-  dir_map = getOption("romRDS_dir_map"),
-  read_txt_as = "csv"
+  dir_map = get_dir_map(),
+  read_as_ext = c(csv = "txt"),
+  file_url_globs_expantion = TRUE,
+  copy_local_files = FALSE
 )
 }
 \arguments{
@@ -18,7 +20,11 @@ rom_rds_read(
 
 \item{dir_map}{Where to put the file. Mapping between destination directories and file's extention.}
 
-\item{read_txt_as}{How to read txt files.}
+\item{read_as_ext}{Named character vertor that specifies how to read different file extentions. Names are supported methods ('csv', 'tsv', 'dta'), values are file expentions that should be processed with these methods.}
+
+\item{file_url_globs_expantion}{Whether to expand (expect) globs in file_url. If so (default) then try expand url with 'Sys.glob'}
+
+\item{copy_local_files}{}
 }
 \value{
 path to rds file

@@ -1,2 +1,4 @@
-^\.github$
+\.org$
+^info\.y[a]?ml$
 ^LICENSE\.md$
+^\.github$

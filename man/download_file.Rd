@@ -4,14 +4,16 @@
 \alias{download_file}
 \title{Downloads file to a dir according to dir_map (see `` for details)}
 \usage{
-download_file(file_url, dir_map = getOption("romRDS_dir_map"))
+download_file(file_url, dir_map = get_dir_map(), timeout = 3600)
 
-download_file(file_url, dir_map = getOption("romRDS_dir_map"))
+download_file(file_url, dir_map = get_dir_map(), timeout = 3600)
 }
 \arguments{
 \item{file_url}{url}
 
 \item{dir_map}{map ext to dir}
+
+\item{timeout}{set option \code{timeout} for download timeout. Default is one hour (3600 sec)}
 }
 \value{
 file name

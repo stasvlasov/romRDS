@@ -1,7 +1,7 @@
 Package: romRDS
-Title: R package to read or make RDS
+Title: Read or Make RDS
 Version: 0.0.0.9000
-Date: 2022-07-31
+Date: 2023-07-25
 Authors@R: 
     person("Stas", "Vlasov", , "s.vlasov@uvt.nl", role = c("aut", "cre"))
 Description: The ~romRDS~ package provides a wrapper that handles
@@ -17,10 +17,10 @@ License: MIT + file LICENSE
 Depends: 
     R (>= 4.2.0)
 Suggests: 
-    checkmate (>= 2.1.0),
-    haven (>= 2.5.0),
-    humanFormat (>= 1.0),
-    tinytest (>= 1.3.1)
+    checkmate,
+    haven,
+    humanFormat,
+    tinytest
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3

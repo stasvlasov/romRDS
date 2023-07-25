@@ -29,4 +29,18 @@ expect_equal(
   , "scripts")
 
 ## return NULL if it does not know where to put things
-expect_error(get_path("oh/yes/lala.wierd_extention"))
+expect_error(romRDS:::get_path("oh/yes/lala.wierdextention"))
+
+
+## check vectorization
+expect_equal(
+    #-------------------------------------------------------------------------
+    c("lala.csv"
+    , "lala.txt"
+    , "lala.pdf"
+    , "lala.dta") |>
+    romRDS:::get_path(
+                 dir_map = list("csv", "dta", docs = c("pdf", "txt"))
+               , make_dir = FALSE)
+    #-------------------------------------------------------------------------
+  , c("csv/lala.csv", "docs/lala.txt", "docs/lala.pdf", "dta/lala.dta"))
