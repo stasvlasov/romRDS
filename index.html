@@ -63,15 +63,163 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-The ~romRDS~ package provides a wrapper that handles
-    assignment of the code's resulting value to an object. The wrapper
-    automatically saves the value in .rds and for later invocations can
-    use this file to skip evaluation. Basically the wrapper either Reads
-    from the disk Or Makes RDS files for later reuse (hence ~romRDS~
-    name). The main motivation is to avoid unnecessary reevaluation of
-    some computationally expensive code chunks (e.g., when your R session
-    crashed and you lost all the objects) and free up from frequent
-    snapshots of the entire environment to the .Rdata.
+<div class="section level1">
+<div class="page-header"><h1 id="romrds-an-read-or-make-rds">
+<code>romRDS</code> an Read or Make RDS<a class="anchor" aria-label="anchor" href="#romrds-an-read-or-make-rds"></a>
+</h1></div>
+<p><a href="https://github.com/stasvlasov/romRDS/actions" class="external-link"><img src="https://github.com/stasvlasov/romRDS/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a> <a href="https://codecov.io/gh/stasvlasov/romRDS" class="external-link"><img src="https://codecov.io/gh/stasvlasov/romRDS/branch/master/graph/badge.svg?token=DIUS28A7US" alt="codecov"></a> <img src="https://img.shields.io/github/languages/code-size/stasvlasov/romRDS" alt="GitHub code size in bytes"></p>
+<p>The <code>romRDS</code> package provides a wrapper that handles assignment of the code’s resulting value to an object. The wrapper automatically saves the value in .rds and for later invocations can use this file to skip evaluation. Basically the wrapper either Reads from the disk Or Makes RDS files for later reuse (hence <code>romRDS</code> name). The main motivation is to avoid unnecessary reevaluation of some computationally expensive code chunks (e.g., when your R session crashed and you lost all the objects) and free up from frequent snapshots of the entire environment to the .Rdata.</p>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## consider some evaluation with subsequent assignment to object</span></span>
+<span><span class="va">my_object_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## the above will take 5 sec every time</span></span>
+<span></span>
+<span><span class="co">## the romRDS package provides the romRDS function (its infix equivalent is %&lt;--%)</span></span>
+<span><span class="fu"><a href="reference/romRDS.html">romRDS</a></span><span class="op">(</span><span class="st">"my_object_name"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## the equivalent of the above in infix form</span></span>
+<span><span class="va">my_object_name</span> <span class="op">%&lt;--%</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## multiple commands can be wrapped in {} as usual</span></span>
+<span><span class="va">my_object_name</span> <span class="op">%&lt;--%</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co">## or you can use R pipes introduced since R v4.0</span></span>
+<span><span class="co">## note that maggritr pipes probably won't work</span></span>
+<span><span class="va">my_object_name</span> <span class="op">%&lt;--%</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Sys.sleep returns NULL so prepending it to this string does not change it."</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"nil"</span><span class="op">)</span></span></code></pre></div>
+<p>By default the package installation does not rely on any dependencies. However, if you need to some additional features (e.g., robust parameters checking and working with STATA’s dta files) you need to install it with extra suggested dependencies.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"nil"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
+<table class="table">
+<colgroup>
+<col width="38%">
+<col width="10%">
+<col width="50%">
+</colgroup>
+<thead><tr class="header">
+<th>name</th>
+<th>version</th>
+<th>comment</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td><a href="https://www.r-project.org/" class="external-link">R</a></td>
+<td>4.2.0</td>
+<td>minimum R version to enable native piping</td>
+</tr></tbody>
+</table>
+<p>Hard dependencies (<code>Depends</code> field in <code>DESCRIPTION</code> file)</p>
+<div class="section level3">
+<h3 id="suggested-packages">Suggested packages<a class="anchor" aria-label="anchor" href="#suggested-packages"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="59%">
+<col width="6%">
+<col width="34%">
+</colgroup>
+<thead><tr class="header">
+<th>name</th>
+<th>version</th>
+<th>comment</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://github.com/markvanderloo/tinytest/blob/master/pkg/README.md" class="external-link">tinytest</a></td>
+<td></td>
+<td>for testing</td>
+</tr>
+<tr class="even">
+<td>humanFormat</td>
+<td></td>
+<td>for formatting messages</td>
+</tr>
+<tr class="odd">
+<td><a href="https://mllg.github.io/checkmate/" class="external-link">checkmate</a></td>
+<td></td>
+<td>function arguments checker, ensures stability</td>
+</tr>
+<tr class="even">
+<td>haven</td>
+<td></td>
+<td>reads STATA .dta files</td>
+</tr>
+</tbody>
+</table>
+<p>Suggested packages (<code>Suggests</code> field in the <code>DESCRIPTION</code> file)</p>
+<table class="table">
+<thead><tr class="header">
+<th>name</th>
+<th>version</th>
+<th>comment</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td><a href="https://www.rarlab.com/" class="external-link">unrar</a></td>
+<td>6.12</td>
+<td>RAR archives utility</td>
+</tr></tbody>
+</table>
+<p>Suggested system packages</p>
+</div>
+<div class="section level3">
+<h3 id="development-dependencies-and-tools">Development dependencies and tools<a class="anchor" aria-label="anchor" href="#development-dependencies-and-tools"></a>
+</h3>
+<p>These packages are used for developing and building <code>romRDS</code></p>
+<table class="table">
+<colgroup>
+<col width="62%">
+<col width="8%">
+<col width="28%">
+</colgroup>
+<thead><tr class="header">
+<th>name</th>
+<th>version</th>
+<th>comment</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></td>
+<td></td>
+<td>builds the package</td>
+</tr>
+<tr class="even">
+<td><a href="https://roxygen2.r-lib.org/" class="external-link">roxygen2</a></td>
+<td></td>
+<td>makes docs</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/REditorSupport/languageserver" class="external-link">languageserver</a></td>
+<td></td>
+<td>provides some IDE consistency</td>
+</tr>
+<tr class="even">
+<td><a href="https://usethis.r-lib.org/" class="external-link">usethis</a></td>
+<td></td>
+<td>repo utils</td>
+</tr>
+</tbody>
+</table>
+<p>Useful packages for development</p>
+</div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
