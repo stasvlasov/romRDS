@@ -1,26 +1,19 @@
 obj_size <-  function(obj) {
     bytes <- utils::object.size(obj)
-    if (requireNamespace("humanFormat", quietly = TRUE)) {
-        humanFormat::formatBytes(bytes)
-    } else {
         format(bytes, units = "auto")
-    }
 }
 
 
 dur_from <- function(start_time) {
     seconds <-
-        (Sys.time() - start_time) |> 
-        as.numeric()
-    if (requireNamespace("humanFormat", quietly = TRUE)) {
-        humanFormat::formatSeconds(seconds)
-    } else {
-        minutes <- seconds %/% 60
-        hours <- minutes %/% 60
-        paste0(if(hours > 0) paste0(hours, "h")
-             , if(minutes > 0) paste0(minutes, "s")
-             , seconds, "s")
-    }
+        (Sys.time() - start_time) |> as.numeric()
+    minutes <- seconds %/% 60
+    hours <- minutes %/% 60
+    minutes <- if(minutes > 0) paste0(minutes %% 60, "m ")
+    hours <- if(hours > 0) paste0(hours, "h ")
+    paste0(hours
+         , minutes
+         , round(seconds) %% 60, "s")
 }
 
 get_dir_vector <- function(ext, dir_map, dir_root = NULL) {

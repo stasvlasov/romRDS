@@ -159,7 +159,7 @@ rom_rds <- function(name
     if(file_exist) {
         if(!quietly) {
             time_started <- Sys.time()
-            message("romRDS -- Reading ", file_path)
+            message("romRDS -- Reading ", file_path, "...")
         }
         val <- readRDS(file_path)
         if(!quietly) {
@@ -178,7 +178,8 @@ rom_rds <- function(name
         }
         if(!quietly) {
             message("romRDS -- MADE ", name
-                  , " and saved - ", obj_size(val), " in ", dur_from(time_started))
+                  , " in ", dur_from(time_started)
+                  , " and saved - ", obj_size(val))
         }
     } else if(!quietly) {
         message("romRDS -- Can not find ", file_path, " file to load.")
