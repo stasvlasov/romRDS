@@ -5,7 +5,7 @@
 ##' @param dir_map Where to put the file. Mapping between destination directories and file's extention.
 ##' @param read_as_ext Named character vertor that specifies how to read different file extentions. Names are supported methods ('csv', 'tsv', 'dta'), values are file expentions that should be processed with these methods.
 ##' @param file_url_globs_expantion Whether to expand (expect) globs in file_url. If so (default) then try expand url with 'Sys.glob'
-##' @param copy_local_files 
+##' @param copy_local_files Whether to copy locally available `file_url` to dir specified by dir_map
 ##' @return path to rds file
 ##' 
 ##' @export 
@@ -88,7 +88,7 @@ rom_rds_read <- function(file_url
                              } else {
                                  do.call(rbind, 
                                          file_path |>
-                                         lapply(read.csv
+                                         lapply(utils::read.csv
                                               , as.is = TRUE
                                               , row.names = NULL))
                              }
@@ -99,7 +99,7 @@ rom_rds_read <- function(file_url
                              } else {
                                  do.call(rbind, 
                                          file_path |>
-                                         lapply(read.table
+                                         lapply(utils::read.table
                                               , as.is = TRUE
                                               , sep = "\t"
                                               , header = TRUE
@@ -110,13 +110,13 @@ rom_rds_read <- function(file_url
                      , csv = if(requireNamespace("data.table", quietly = TRUE)) {
                                  data.table::fread(file_path)
                              } else {
-                                 read.csv(file_path, as.is = TRUE, row.names = NULL)
+                                 utils::read.csv(file_path, as.is = TRUE, row.names = NULL)
 
                              }
                      , tsv = if(requireNamespace("data.table", quietly = TRUE)) {
                                  data.table::fread(file_path)
                              } else {
-                                 read.table(file_path, as.is = TRUE, sep = "\t", header = TRUE, row.names = NULL)
+                                 utils::read.table(file_path, as.is = TRUE, sep = "\t", header = TRUE, row.names = NULL)
                              }
                      , dta = if(requireNamespace("haven", quietly = TRUE)) {
                                  if(requireNamespace("data.table", quietly = TRUE)) {
@@ -157,7 +157,7 @@ download_file <- function(file_url
             message("download_file -- Downloading to ", file_path)
             timeout_original <- getOption("timeout")
             options(timeout = timeout)
-            if(download.file(file_url, file_path) == 0) {
+            if(utils::download.file(file_url, file_path) == 0) {
                 options(timeout = timeout_original)
                 message("download_file -- File ", file_path, " is downloaded.")
                 return(file_path)

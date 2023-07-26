@@ -10,7 +10,7 @@ expect_equal(
       ## read it and return check sum
       names(dir_map) |>
           file.path("csv", basename(csv_url)) |>
-          read.csv() |>
+          utils::read.csv() |>
           lapply(sum)
   }
   #-------------------------------------------------------------------------

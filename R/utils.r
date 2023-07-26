@@ -1,3 +1,13 @@
+obj_size <-  function(obj) {
+    bytes <- utils::object.size(obj)
+    if (requireNamespace("humanFormat", quietly = TRUE)) {
+        humanFormat::formatBytes(bytes)
+    } else {
+        format(bytes, units = "auto")
+    }
+}
+
+
 dur_from <- function(start_time) {
     seconds <-
         (Sys.time() - start_time) |> 
@@ -5,16 +15,11 @@ dur_from <- function(start_time) {
     if (requireNamespace("humanFormat", quietly = TRUE)) {
         humanFormat::formatSeconds(seconds)
     } else {
-        paste(seconds, "sec")
-    }
-}
-
-obj_size <-  function(obj) {
-    bytes <- object.size(obj)
-    if (requireNamespace("humanFormat", quietly = TRUE)) {
-        humanFormat::formatBytes(bytes)
-    } else {
-        paste(bytes, "bytes")
+        minutes <- seconds %/% 60
+        hours <- minutes %/% 60
+        paste0(if(hours > 0) paste0(hours, "h")
+             , if(minutes > 0) paste0(minutes, "s")
+             , seconds, "s")
     }
 }
 

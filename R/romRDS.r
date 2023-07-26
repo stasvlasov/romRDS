@@ -10,7 +10,7 @@ get_dir_map_defaults <- function() {
 
 .onAttach <- function(libname, pkgname) {
     options(
-        "romRDS_dir_map" = romRDS:::get_dir_map_defaults()
+        "romRDS_dir_map" = get_dir_map_defaults()
     )
 }
 
@@ -159,17 +159,17 @@ rom_rds <- function(name
     if(file_exist) {
         if(!quietly) {
             time_started <- Sys.time()
-            message("romRDS -- Loading file ", file_path)
+            message("romRDS -- Reading ", file_path)
         }
         val <- readRDS(file_path)
         if(!quietly) {
-            message("romRDS -- Loaded ", name
+            message("romRDS -- READ ", name
                   , " - ", obj_size(val), " in ", dur_from(time_started))
         }
     } else if(!do_not_make) {
         if(!quietly) {
             time_started <- Sys.time()
-            message("romRDS -- File ", file_path, " does not exist. Making one...")
+            message("romRDS -- Making ", file_path, "...")
         }
         val <- eval(..., enclos = globalenv())
         ## do not save NULLs (this 'feature' used by rom_rds_read)
@@ -177,8 +177,8 @@ rom_rds <- function(name
             saveRDS(val, file_path, compress = rds_compress)
         }
         if(!quietly) {
-            message("romRDS -- Done! Made ", name
-                  , " and saved - ", obj_size(var), " in ", dur_from(time_started))
+            message("romRDS -- MADE ", name
+                  , " and saved - ", obj_size(val), " in ", dur_from(time_started))
         }
     } else if(!quietly) {
         message("romRDS -- Can not find ", file_path, " file to load.")
@@ -200,7 +200,6 @@ rom_rds <- function(name
 ##'
 ##' @inherit rom_rds
 ##' @export
-##' @aliases rom_rds
 romRDS <- rom_rds
 
 

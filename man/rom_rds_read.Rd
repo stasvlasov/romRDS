@@ -24,7 +24,7 @@ rom_rds_read(
 
 \item{file_url_globs_expantion}{Whether to expand (expect) globs in file_url. If so (default) then try expand url with 'Sys.glob'}
 
-\item{copy_local_files}{}
+\item{copy_local_files}{Whether to copy locally available \code{file_url} to dir specified by dir_map}
 }
 \value{
 path to rds file

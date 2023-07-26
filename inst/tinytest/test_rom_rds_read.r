@@ -48,6 +48,8 @@ expect_true({
 expect_true({
     ## example links
     zip_url <- "https://files-example-com.github.io/uploads/zip_5MB.zip"
+    doc_url <- "https://file-examples.com/wp-content/storage/2017/02/file-sample_100kB.docx"
+    csv_url <- "https://filesamples.com/samples/document/csv/sample4.csv"
     ## make temp dir mappings
     dir_map <- list(list("data" = list("zip", "csv", "rds")
                        , "doc" = c("docx", "pdf")))

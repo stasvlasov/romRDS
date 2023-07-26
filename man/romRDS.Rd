@@ -2,7 +2,6 @@
 % Please edit documentation in R/romRDS.r
 \name{romRDS}
 \alias{romRDS}
-\alias{rom_rds}
 \title{Read or Make RDS}
 \usage{
 romRDS(

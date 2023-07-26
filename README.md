@@ -66,12 +66,13 @@ Hard dependencies (`Depends` field in `DESCRIPTION` file)
 
 ### Suggested packages
 
-| name                                                                            | version | comment                                       |
-|---------------------------------------------------------------------------------|---------|-----------------------------------------------|
-| [tinytest](https://github.com/markvanderloo/tinytest/blob/master/pkg/README.md) |         | for testing                                   |
-| humanFormat                                                                     |         | for formatting messages                       |
-| [checkmate](https://mllg.github.io/checkmate/)                                  |         | function arguments checker, ensures stability |
-| haven                                                                           |         | reads STATA .dta files                        |
+| name                                                                            | version | comment                                                   |
+|---------------------------------------------------------------------------------|---------|-----------------------------------------------------------|
+| [tinytest](https://github.com/markvanderloo/tinytest/blob/master/pkg/README.md) |         | for testing                                               |
+| humanFormat                                                                     |         | for formatting messages                                   |
+| [checkmate](https://mllg.github.io/checkmate/)                                  |         | function arguments checker, ensures stability             |
+| haven                                                                           |         | reads STATA .dta files                                    |
+| [data.table](https://rdatatable.gitlab.io/data.table/)                          |         | fast data.frames, used as main input and output data type |
 
 Suggested packages (`Suggests` field in the `DESCRIPTION` file)
 
